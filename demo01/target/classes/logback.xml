@@ -1,0 +1,37 @@
+    <configuration>
+
+    <!-- 定義以Console顯示日誌 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- 設計日誌內容格式 -->
+            <Pattern>
+                %gray(%d{YYYY-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %gray([%t]) %cyan(%c{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- 定義以檔案保留日誌 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>/xxx/xxx/xxx/stdout.log</File>
+        <encoder>
+            <pattern>
+                <!-- 日誌寫檔僅保留關鍵字，無法定義顏色 -->
+                %d{YYYY-MM-dd HH:mm:ss.SSS} %-5level [%t] %c{1.}: %msg%n%throwable
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 使用gzip將日誌壓縮起來，並以日期來命名 -->
+            <fileNamePattern>C:\Users\User\Documents\Lab01\log\logB/stdout.log.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!--  保留30天日誌 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 設定要被日誌紀錄下的等級 -->
+    <root level="info">
+        <!-- 連接到名為STDOUT的日誌格式 -->
+        <appender-ref ref="STDOUT" />
+        <!-- 連接到名為FILE的日誌格式 -->
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
